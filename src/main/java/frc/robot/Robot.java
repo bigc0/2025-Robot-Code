@@ -12,9 +12,9 @@ import com.ctre.phoenix.motorcontrol.can.*;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Joystick;
 
-import com.revrobotics.servohub.ServoHub.ResetMode;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkBaseConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
@@ -55,11 +55,10 @@ public Robot() {
   elevator = new SparkMax(3, MotorType.kBrushless);
   elevator2 = new SparkMax(4, MotorType.kBrushless);
 
-  SparkMaxConfig elevatorConfig = new SparkMaxConfig();
   SparkMaxConfig elevator2Config = new SparkMaxConfig();
   elevator2Config
-    .follow(elevator);
-    
+    .follow(3);
+
   //elevator.configure(elevatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   elevator2.configure(elevator2Config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 }
@@ -131,11 +130,11 @@ public Robot() {
     
      //elevator up
     if (m_controller.getRawButton(5)) {
-      elevator.set(0.5);
+      elevator.set(0.1);
     }
     // elevator down
     else if (m_controller.getRawButton(6)) {
-      elevator.set(-0.5);
+      elevator.set(-0.1);
     }
     else {
       elevator.set(0);
