@@ -172,6 +172,16 @@ public Robot() {
     else {
       intake.set(0);
     }
+
+    if (m_stick.getRawButton(7)) {
+      elevator.set(0.25);
+    }
+    else if (m_stick.getRawButton(8)) {
+      elevator.set(-0.25);
+    }
+    else {
+      elevator.set(0);
+    }
     }
 
   /** This function is called once when the robot is disabled. */
