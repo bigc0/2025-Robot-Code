@@ -48,12 +48,25 @@ public class Robot extends TimedRobot {
   private final Timer m_timer = new Timer();
   SparkMax elevator;
   SparkMax elevator2;
+  SparkMax joint;
+  SparkMax intake;
   // private static final int elevatorid = 3;
   // private static final int elevator2id = 4;
 
 public Robot() {
-  elevator = new SparkMax(3, MotorType.kBrushless);
-  elevator2 = new SparkMax(4, MotorType.kBrushless);
+  //For Actual NEO Motors
+  // elevator = new SparkMax(3, MotorType.kBrushless);
+  // elevator2 = new SparkMax(4, MotorType.kBrushless);
+
+  //For CIM Testing Motors
+  elevator = new SparkMax(3, MotorType.kBrushed);
+  elevator2 = new SparkMax(4, MotorType.kBrushed);
+
+  //For joint on coral manipulator
+  joint = new SparkMax(5, MotorType.kBrushed);
+
+  //For coral intake
+  intake = new SparkMax(6, MotorType.kBrushed);
 
   SparkMaxConfig elevator2Config = new SparkMaxConfig();
   elevator2Config
@@ -130,14 +143,34 @@ public Robot() {
     
      //elevator up
     if (m_controller.getRawButton(5)) {
-      elevator.set(0.1);
+      elevator.set(0.25);
     }
     // elevator down
     else if (m_controller.getRawButton(6)) {
-      elevator.set(-0.1);
+      elevator.set(-0.25);
     }
     else {
       elevator.set(0);
+    }
+
+    if (m_controller.getRawButton(1)) {
+      joint.set(0.25);
+    }
+    else if (m_controller.getRawButton(2)) {
+      joint.set(-0.25);
+    }
+    else {
+      joint.set(0);
+    }
+
+    if (m_controller.getRawButton(3)) {
+      intake.set(0.25);
+    }
+    else if (m_controller.getRawButton(4)) {
+      intake.set(-0.25);
+    }
+    else {
+      intake.set(0);
     }
     }
 
