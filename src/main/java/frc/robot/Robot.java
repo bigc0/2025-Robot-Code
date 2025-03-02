@@ -81,7 +81,7 @@ public Robot() {
    */
   @Override
   public void robotInit() {
-    //CameraServer.startAutomaticCapture();
+    CameraServer.startAutomaticCapture();
     // We need to invert one side of the drivetrain so that positive voltages
     // result in both sides moving forward. Depending on how your robot's
     // gearbox is constructed, you might have to invert the left side instead.
@@ -173,6 +173,7 @@ public Robot() {
       intake.set(0);
     }
 
+    //Code for X3D
     if (m_stick.getRawButton(7)) {
       elevator.set(0.25);
     }
@@ -181,6 +182,26 @@ public Robot() {
     }
     else {
       elevator.set(0);
+    }
+
+    if (m_stick.getRawButton(5)) {
+      joint.set(0.25);
+    }
+    else if (m_stick.getRawButton(6)) {
+      joint.set(-0.25);
+    }
+    else {
+      joint.set(0);
+    }
+
+    if (m_stick.getRawButton(1)) {
+      intake.set(0.25);
+    }
+    else if (m_stick.getRawButton(2)) {
+      intake.set(-0.25); 
+    }
+    else {
+      intake.set(0);
     }
     }
 
