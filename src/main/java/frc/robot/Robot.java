@@ -55,12 +55,12 @@ public class Robot extends TimedRobot {
 
 public Robot() {
   //For Actual NEO Motors
-  // elevator = new SparkMax(3, MotorType.kBrushless);
-  // elevator2 = new SparkMax(4, MotorType.kBrushless);
+  elevator = new SparkMax(3, MotorType.kBrushless);
+  elevator2 = new SparkMax(4, MotorType.kBrushless);
 
   //For CIM Testing Motors
-  elevator = new SparkMax(3, MotorType.kBrushed);
-  elevator2 = new SparkMax(4, MotorType.kBrushed);
+  // elevator = new SparkMax(3, MotorType.kBrushed);
+  // elevator2 = new SparkMax(4, MotorType.kBrushed);
 
   //For joint on coral manipulator
   joint = new SparkMax(5, MotorType.kBrushed);
