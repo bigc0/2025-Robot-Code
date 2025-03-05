@@ -8,6 +8,8 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+
+import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.*;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Joystick;
@@ -22,7 +24,6 @@ import com.revrobotics.spark.config.SparkBaseConfig.*;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
 import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
-
 
 
 /**
@@ -70,7 +71,7 @@ public Robot() {
 
   SparkMaxConfig elevator2Config = new SparkMaxConfig();
   elevator2Config
-    .follow(3);
+    .follow(3, true);
 
   //elevator.configure(elevatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   elevator2.configure(elevator2Config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
@@ -143,11 +144,11 @@ public Robot() {
     
      //elevator up
     if (m_controller.getRawButton(5)) {
-      elevator.set(0.25);
+      elevator.set(-0.25);
     }
     // elevator down
     else if (m_controller.getRawButton(6)) {
-      elevator.set(-0.25);
+      elevator.set(0.25);
     }
     else {
       elevator.set(0);
@@ -168,37 +169,6 @@ public Robot() {
     }
     else if (m_controller.getRawButton(4)) {
       intake.set(-0.25);
-    }
-    else {
-      intake.set(0);
-    }
-
-    //Code for X3D
-    if (m_stick.getRawButton(7)) {
-      elevator.set(0.25);
-    }
-    else if (m_stick.getRawButton(8)) {
-      elevator.set(-0.25);
-    }
-    else {
-      elevator.set(0);
-    }
-
-    if (m_stick.getRawButton(5)) {
-      joint.set(0.25);
-    }
-    else if (m_stick.getRawButton(6)) {
-      joint.set(-0.25);
-    }
-    else {
-      joint.set(0);
-    }
-
-    if (m_stick.getRawButton(1)) {
-      intake.set(0.25);
-    }
-    else if (m_stick.getRawButton(2)) {
-      intake.set(-0.25); 
     }
     else {
       intake.set(0);
