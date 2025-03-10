@@ -9,7 +9,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
-import com.ctre.phoenix.motorcontrol.InvertType;
 import com.ctre.phoenix.motorcontrol.can.*;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Joystick;
@@ -18,12 +17,7 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.config.SparkBaseConfig;
 import com.revrobotics.spark.config.SparkMaxConfig;
-import com.revrobotics.spark.config.SparkBaseConfig.*;
-import com.revrobotics.spark.SparkLowLevel.MotorType;
-import com.revrobotics.spark.config.SparkMaxConfig;
-import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 
 /**
@@ -52,8 +46,6 @@ public class Robot extends TimedRobot {
   SparkMax joint;
   SparkMax intake;
   SparkMax intake2;
-  // private static final int elevatorid = 3;
-  // private static final int elevator2id = 4;
 
 public Robot() {
   //For Actual NEO Motors
@@ -79,6 +71,12 @@ public Robot() {
     .follow(3, true);
 
   elevator2.configure(elevator2Config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+  SparkMaxConfig intake2Config= new SparkMaxConfig();
+  intake2Config
+    .follow(6, false);
+
+    intake2.configure(intake2Config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 }
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -86,7 +84,7 @@ public Robot() {
    */
   @Override
   public void robotInit() {
-    CameraServer.startAutomaticCapture();
+    //CameraServer.startAutomaticCapture();
     // We need to invert one side of the drivetrain so that positive voltages
     // result in both sides moving forward. Depending on how your robot's
     // gearbox is constructed, you might have to invert the left side instead.
