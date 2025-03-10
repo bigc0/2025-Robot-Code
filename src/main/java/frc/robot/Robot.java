@@ -57,10 +57,10 @@ public Robot() {
   // elevator2 = new SparkMax(4, MotorType.kBrushed);
 
   //For joint on coral manipulator
-  joint = new SparkMax(5, MotorType.kBrushed);
+  joint = new SparkMax(6, MotorType.kBrushed);
 
   //For coral intake
-  intake = new SparkMax(6, MotorType.kBrushed);
+  intake = new SparkMax(5, MotorType.kBrushed);
 
   //Second coral intake
   intake2 = new SparkMax(7, MotorType.kBrushed);
@@ -157,23 +157,23 @@ public Robot() {
     }
 
     if (m_controller.getRawButton(1)) {
-      joint.set(0.4);
+      intake.set(0.4);
     }
     else if (m_controller.getRawButton(2)) {
-      joint.set(-0.4);
-    }
-    else {
-      joint.set(0);
-    }
-
-    if (m_controller.getRawButton(3)) {
-      intake.set(0.5);
-    }
-    else if (m_controller.getRawButton(4)) {
-      intake.set(-0.5);
+      intake.set(-0.4);
     }
     else {
       intake.set(0);
+    }
+
+    if (m_controller.getRawButton(3)) {
+      joint.set(0.5);
+    }
+    else if (m_controller.getRawButton(4)) {
+      joint.set(-0.5);
+    }
+    else {
+      joint.set(0);
     }
     }
 
