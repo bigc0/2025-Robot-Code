@@ -51,6 +51,7 @@ public class Robot extends TimedRobot {
   SparkMax elevator2;
   SparkMax joint;
   SparkMax intake;
+  SparkMax intake2;
   // private static final int elevatorid = 3;
   // private static final int elevator2id = 4;
 
@@ -69,11 +70,14 @@ public Robot() {
   //For coral intake
   intake = new SparkMax(6, MotorType.kBrushed);
 
+  //Second coral intake
+  intake2 = new SparkMax(7, MotorType.kBrushed);
+
+  //Sets elevator2 to follow elevator (CANID 3) and sets inverted to (true)
   SparkMaxConfig elevator2Config = new SparkMaxConfig();
   elevator2Config
     .follow(3, true);
 
-  //elevator.configure(elevatorConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   elevator2.configure(elevator2Config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 }
   /**
@@ -121,9 +125,9 @@ public Robot() {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    if (m_timer.get() < 1) {
+    if (m_timer.get() < 3) {
       // Drive forwards half speed, make sure to turn input squaring off
-      m_robotDrive.arcadeDrive(-0.2, 0.0, false);
+      m_robotDrive.arcadeDrive(0.25, 0.0, false);
 
       } else {
         m_robotDrive.stopMotor(); // stop robot
@@ -139,36 +143,36 @@ public Robot() {
   /** This function is called periodically during operator control. */
   @Override
   public void teleopPeriodic() {
-    m_robotDrive.arcadeDrive(m_controller.getLeftY() * 0.5, m_controller.getRightX() * 0.5);
+    m_robotDrive.arcadeDrive(m_controller.getLeftY() * -1, m_controller.getRightX() * -1);
 
     
      //elevator up
     if (m_controller.getRawButton(5)) {
-      elevator.set(-0.25);
+      elevator.set(0.25);
     }
     // elevator down
     else if (m_controller.getRawButton(6)) {
-      elevator.set(0.25);
+      elevator.set(-0.25);
     }
     else {
       elevator.set(0);
     }
 
     if (m_controller.getRawButton(1)) {
-      joint.set(0.25);
+      joint.set(0.4);
     }
     else if (m_controller.getRawButton(2)) {
-      joint.set(-0.25);
+      joint.set(-0.4);
     }
     else {
       joint.set(0);
     }
 
     if (m_controller.getRawButton(3)) {
-      intake.set(0.25);
+      intake.set(0.5);
     }
     else if (m_controller.getRawButton(4)) {
-      intake.set(-0.25);
+      intake.set(-0.5);
     }
     else {
       intake.set(0);
