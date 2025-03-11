@@ -8,16 +8,15 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
-
 import com.ctre.phoenix.motorcontrol.can.*;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Joystick;
-
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkBase.PersistMode;
 import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.config.SparkMaxConfig;
+import com.revrobotics.spark.config.SparkBaseConfig.IdleMode;
 
 
 /**
@@ -30,13 +29,6 @@ public class Robot extends TimedRobot {
   private String m_autoSelected;
   private final WPI_VictorSPX LeftDrive = new WPI_VictorSPX(0);
   private final WPI_VictorSPX RightDrive = new WPI_VictorSPX(1);
-
-
-  /* 
-  Replaced with Spark MAX
-  private final WPI_VictorSPX elevator = new WPI_VictorSPX(2);
-  private final WPI_VictorSPX Elevator2 = new WPI_VictorSPX(3);
-*/
   private final DifferentialDrive m_robotDrive = new DifferentialDrive(LeftDrive, RightDrive);
   private final XboxController m_controller = new XboxController(0);
   private final Joystick m_stick = new Joystick(1);
@@ -48,6 +40,7 @@ public class Robot extends TimedRobot {
   SparkMax intake2;
 
 public Robot() {
+
   //For Actual NEO Motors
   elevator = new SparkMax(3, MotorType.kBrushless);
   elevator2 = new SparkMax(4, MotorType.kBrushless);
@@ -65,18 +58,33 @@ public Robot() {
   //Second coral intake
   intake2 = new SparkMax(7, MotorType.kBrushed);
 
+  //Sets elevator to brake mode
+  SparkMaxConfig elevatorConfig = new SparkMaxConfig();
+  elevatorConfig
+    .idleMode(IdleMode.kBrake);
+
   //Sets elevator2 to follow elevator (CANID 3) and sets inverted to (true)
+  //Also turns on brake mode
   SparkMaxConfig elevator2Config = new SparkMaxConfig();
   elevator2Config
-    .follow(3, true);
+    .follow(3, true)
+    .idleMode(IdleMode.kBrake);
 
   elevator2.configure(elevator2Config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
+  //Set intake2 to follow intake
   SparkMaxConfig intake2Config= new SparkMaxConfig();
   intake2Config
-    .follow(6, false);
+    .follow(5, false);
 
     intake2.configure(intake2Config, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+
+    //Turned on brake mode
+    SparkMaxConfig jointConfig = new SparkMaxConfig();
+    jointConfig
+      .idleMode(IdleMode.kBrake);
+
+    joint.configure(jointConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 }
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -84,7 +92,9 @@ public Robot() {
    */
   @Override
   public void robotInit() {
+    //For camera
     //CameraServer.startAutomaticCapture();
+
     // We need to invert one side of the drivetrain so that positive voltages
     // result in both sides moving forward. Depending on how your robot's
     // gearbox is constructed, you might have to invert the left side instead.
@@ -124,7 +134,7 @@ public Robot() {
   @Override
   public void autonomousPeriodic() {
     if (m_timer.get() < 3) {
-      // Drive forwards half speed, make sure to turn input squaring off
+      // Drive forwards quarter speed for 3 seconds, make sure to turn input squaring off
       m_robotDrive.arcadeDrive(0.25, 0.0, false);
 
       } else {
