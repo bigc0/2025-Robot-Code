@@ -93,7 +93,7 @@ public Robot() {
   @Override
   public void robotInit() {
     //For camera
-    //CameraServer.startAutomaticCapture();
+    CameraServer.startAutomaticCapture();
 
     // We need to invert one side of the drivetrain so that positive voltages
     // result in both sides moving forward. Depending on how your robot's
